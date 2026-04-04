@@ -15,7 +15,7 @@ IMAP Fetch → HTML Cleanup → Claude API Summarization → HTML Email → SMTP
 5. Formats the output as a clean, mobile-friendly HTML email
 6. Sends the digest to one or more recipients via SMTP
 
-Newsletters that don't match your interests are listed at the bottom with a single line — no noise, no clutter.
+Newsletters that don't match your interests are listed at the bottom with a single line so you won't miss anything.
 
 ## Setup
 
