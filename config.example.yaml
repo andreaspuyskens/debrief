@@ -1,0 +1,39 @@
+# Folder to scan for newsletters
+# This must match the exact IMAP folder name in your mailbox
+imap_folder: "Newsletters"
+
+# How far back to look (days), used on first run or as fallback
+lookback_days: 7
+
+# Recipients for the digest email (one or more addresses)
+digest_recipients:
+  - "you@example.com"
+
+# Sender display name (shown in the "From" field of the digest)
+digest_sender_name: "Newsletter Digest"
+
+# Claude model to use (see https://docs.anthropic.com/en/docs/about-claude/models)
+claude_model: "claude-sonnet-4-20250514"
+
+# Max digest length (approximate word count target)
+digest_max_words: 4500
+
+# Interest profile — the heart of Debrief
+# Update this list to reflect YOUR focus areas. Claude will score each newsletter
+# against these topics and only summarize what's relevant to you.
+#
+# Tips:
+# - Be specific: "CRISPR gene editing in agriculture" works better than "biology"
+# - Group related topics together for readability
+# - 10-20 interests is a good range
+interests:
+  # Example: Research areas
+  - "Machine learning and deep learning"
+  - "Natural language processing"
+
+  # Example: Industry & policy
+  - "AI regulation and governance"
+  - "Open-source software and communities"
+
+  # Example: Career
+  - "Jobs and fellowships in AI research"

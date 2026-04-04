@@ -1,0 +1,22 @@
+# Secrets and personal config
+.env
+config.yaml
+
+# Runtime data
+logs/
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+.venv/
+venv/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE and tools
+.vscode/
+.idea/
+.claude/
