@@ -67,7 +67,12 @@ def _extract_links(soup: BeautifulSoup) -> list[dict]:
         # Skip empty, anchor-only, mailto, and tracking links
         if not url or url.startswith("#") or url.startswith("mailto:"):
             continue
-        if any(t in url for t in ["unsubscribe", "tracking", "click.mailchimp", "list-manage"]):
+        if any(t in url for t in [
+            "unsubscribe", "tracking", "click.mailchimp", "list-manage",
+            "substack.com/redirect", "substack.com/app-link",
+            "/redirect/", "utm_source", "utm_medium", "utm_campaign",
+            "click.convertkit", "sendgrid.net/ls", "mailchmp.com",
+        ]):
             continue
         if url not in seen_urls and text:
             links.append({"text": text, "url": url})

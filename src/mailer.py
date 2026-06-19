@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import logging
 import smtplib
+import uuid
 from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.utils import formatdate
 from pathlib import Path
 from typing import Optional, Tuple
 
@@ -79,6 +81,8 @@ def send_digest(
     msg["Subject"] = subject
     msg["From"] = f"{sender_name} <{smtp_user}>"
     msg["To"] = ", ".join(recipients)
+    msg["Date"] = formatdate(localtime=True)
+    msg["Message-ID"] = f"<debrief-{uuid.uuid4()}@{smtp_user.split('@')[1]}>"
 
     msg.attach(MIMEText(plain_text, "plain", "utf-8"))
     msg.attach(MIMEText(html, "html", "utf-8"))

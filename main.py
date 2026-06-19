@@ -5,7 +5,9 @@ __version__ = "0.1.0"
 import argparse
 import logging
 import os
+import socket
 import sys
+import time
 from pathlib import Path
 
 import yaml
@@ -17,6 +19,19 @@ from src.digest import generate_digest
 from src.mailer import render_digest, send_digest
 
 LOG_DIR = Path(__file__).parent / "logs"
+NETWORK_TIMEOUT = 90  # seconds to wait for network on startup
+
+
+def wait_for_network(timeout: int = NETWORK_TIMEOUT) -> bool:
+    """Wait until DNS resolves, to handle running right after system wake."""
+    start = time.time()
+    while time.time() - start < timeout:
+        try:
+            socket.getaddrinfo("imap.mailbox.org", 993)
+            return True
+        except socket.gaierror:
+            time.sleep(5)
+    return False
 
 
 def setup_logging(verbose: bool = False) -> None:
@@ -52,6 +67,13 @@ def main():
 
     load_dotenv(override=True)
     config = load_config(args.config)
+
+    # Wait for network (important when launched at wake by launchd)
+    logger.info("Checking network connectivity...")
+    if not wait_for_network():
+        logger.error("Network unavailable after %ds — aborting", NETWORK_TIMEOUT)
+        sys.exit(1)
+    logger.info("Network ready")
 
     # Fetch
     logger.info("Fetching newsletters from '%s'", config["imap_folder"])
